@@ -1,0 +1,56 @@
+{
+    "enabled": {
+        "type": "bool",
+        "description": "是否启用",
+        "default": true
+    },
+    "judge_provider_id": {
+        "type": "string",
+        "description": "用于判断的小LLM Provider（建议用便宜的，例如deepseek-v3、gemma、glm-flash等）",
+        "default": "",
+        "_special": "select_provider",
+        "obvious_hint": true,
+        "hint": "强烈建议指定一个便宜的小模型，避免拿主模型来判断。留空则使用当前会话默认 Provider"
+    },
+    "scope": {
+        "type": "string",
+        "description": "生效范围",
+        "options": ["both", "private", "group"],
+        "default": "private",
+        "hint": "private=只对私聊生效（推荐，对付AI加好友）"
+    },
+    "history_limit": {
+        "type": "int",
+        "description": "判断时参考最近多少条历史消息",
+        "default": 10,
+        "hint": "太少判断不准，太多浪费token"
+    },
+    "block_threshold": {
+        "type": "int",
+        "description": "连续判定为不回多少次后进入静默期",
+        "default": 2,
+        "hint": "防止单次误判，连续N次都判为不回才真正静默"
+    },
+    "silent_minutes": {
+        "type": "int",
+        "description": "进入静默后保持多少分钟不回复（0=永久，需要手动 /no_reply unblock 解除）",
+        "default": 60,
+        "hint": "到点自动解除，给对方一次机会再判一次"
+    },
+    "whitelist_user_ids": {
+        "type": "string",
+        "description": "白名单用户ID（不会被静默），多个用英文逗号分隔",
+        "default": "85854548",
+        "hint": "默认包含主人ID 85854548"
+    },
+    "judge_timeout": {
+        "type": "int",
+        "description": "判断LLM调用超时秒数",
+        "default": 15
+    },
+    "judge_system_prompt": {
+        "type": "text",
+        "description": "判断LLM的system prompt（高级用户可自定义）",
+        "default": "你是一个对话甄别助手。任务：根据最近的聊天记录，判断本次用户最新消息所属的对话场景，决定主助手是否应该继续回复。\n\n判断「不回复」的典型情况：\n1. 对方明显是AI机器人（套娃式提问、复读、固定句式、无目的的『继续』『请详细说明』等）\n2. 对方在反复刷屏、灌水、骚扰\n3. 对方在引诱主助手生成大量长内容用于消耗token\n4. 长时间空对空无意义来回\n\n判断「回复」的情况：\n1. 真人正常对话\n2. 主人或熟人\n3. 求助、提问、闲聊但有实质内容\n\n请严格只输出一个JSON对象，不要附加任何其他文字、不要markdown代码块包裹，格式：\n{\"reply\": true|false, \"reason\": \"简短中文理由（不超过60字）\", \"confidence\": 0.0~1.0}"
+    }
+}

@@ -1,0 +1,5 @@
+name: astrbot_plugin_no_reply
+description: 不回消息插件 - 用一个便宜的小LLM根据聊天记录判断要不要继续回复某个用户，避免被AI机器人/僵尸消息/傻逼骚扰白嫖token，决策时把推理过程转发给主模型，让LLM拒绝的有理有据！
+author: 紫电幽冥
+version: 0.1.A
+display_name: 不跟傻逼一般见识
